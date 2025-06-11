@@ -1,16 +1,17 @@
 import React, { useState, useId, useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 
+// Form component for submitting new tasks
 function TaskForm() {
   const [taskName, setTaskName] = useState("");
-  const id = useId();
-  const { addTask } = useContext(TaskContext);
+  const id = useId(); // Generate unique ID for accessibility
+  const { addTask } = useContext(TaskContext); // Access addTask from the context
 
   function handleSubmit(e) {
     e.preventDefault();
     if (taskName.trim() === "") return;
     addTask(taskName.trim());
-    setTaskName("");
+    setTaskName(""); // Clear input after submission
   }
 
   return (

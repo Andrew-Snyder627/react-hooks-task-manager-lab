@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import TaskList from "./TaskList";
 
+// Search input component with useRef and local state
 function SearchBar() {
   const [query, setQuery] = useState("");
   const inputRef = useRef();

@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 
+// Component to display the list of tasks
 function TaskList({ query }) {
   const { tasks, toggleComplete } = useContext(TaskContext);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(query.toLowerCase())
-  );
+  // Filter tasks based on the search query
+  const filteredTasks = tasks.filter((task) => {
+    const title = task.title || "";
+    return title.toLowerCase().includes(query.toLowerCase());
+  });
 
   return (
     <ul>
