@@ -42,4 +42,12 @@ export function TaskProvider({ children }) {
       .then((response) => response.json())
       .then((data) => setTasks((previous) => [...previous, data]));
   }
+
+  const value = {
+    tasks,
+    toggleComplete,
+    addTask,
+  };
+
+  return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 }
