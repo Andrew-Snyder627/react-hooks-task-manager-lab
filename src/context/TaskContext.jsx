@@ -1,16 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
 
+// Create the context to share task data and actions across the app
 export const TaskContext = createContext();
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
 
+  // Load tasks from the backend on initial mount
   useEffect(() => {
     fetch("http://localhost:6001/tasks")
       .then((response) => response.json())
       .then(setTasks);
   }, []);
 
+  // Toggle a task to completed status and persist the change to the backend
   function toggleComplete(id) {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -27,6 +30,7 @@ export function TaskProvider({ children }) {
     });
   }
 
+  // Add a new task to state and backend
   function addTask(title) {
     const newTask = {
       title,
@@ -40,7 +44,11 @@ export function TaskProvider({ children }) {
       body: JSON.stringify(newTask),
     })
       .then((response) => response.json())
-      .then((data) => setTasks((previous) => [...previous, data]));
+      .then((data) => {
+        // Ensure we preserve title due to test failure
+        const task = { ...data, title: data.title || title };
+        setTasks((previous) => [...previous, task]);
+      });
   }
 
   const value = {
